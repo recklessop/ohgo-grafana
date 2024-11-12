@@ -1,0 +1,3 @@
+requests
+logging
+influxdb_client
