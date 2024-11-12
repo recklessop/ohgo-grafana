@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  influxdb:
+    image: influxdb:2.0
+    container_name: influxdb
+    ports:
+      - "8086:8086"  # Expose InfluxDB on port 8086
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin  # Set your InfluxDB username
+      - DOCKER_INFLUXDB_INIT_PASSWORD=yourpass  # Set your InfluxDB password
+      - DOCKER_INFLUXDB_INIT_ORG=ohgo            # Set your InfluxDB organization
+      - DOCKER_INFLUXDB_INIT_BUCKET=ohgo      # Set your InfluxDB bucket
+    volumes:
+      - influxdb_data:/var/lib/influxdb2  # Persistent storage for InfluxDB
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"  # Expose Grafana on port 3000
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin    # Set your Grafana username
+      - GF_SECURITY_ADMIN_PASSWORD=yourpass  # Set your Grafana password
+    volumes:
+      - grafana_data:/var/lib/grafana  # Persistent storage for Grafana
+
+volumes:
+  influxdb_data:
+  grafana_data:
